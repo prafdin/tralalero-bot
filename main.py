@@ -34,10 +34,10 @@ user_data_store = {}
 async def start_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = update.effective_user.id
     LOGGER.info(f"User {user_id} started the quiz.")
-    questions = QUESTIONS.copy()
+    questions = QUESTIONS.copy()[:MAX_QUESTIONS]
     random.shuffle(questions)
     user_data_store[user_id] = {
-        "questions": questions[:MAX_QUESTIONS],
+        "questions": questions,
         "answers": [],
         "pictures_iter": iter([q["picture"] for q in questions]),
         "pronounces_iter": iter([q["pronounce"] for q in questions]),
