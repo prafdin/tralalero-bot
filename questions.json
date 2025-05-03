@@ -8,5 +8,45 @@
     "picture": "data/lirililarila.jpeg",
     "pronounce": "data/lirililarila.mp3",
     "answer": "lirili larila elefante nel deserto che cammina qua"
+  },
+  {
+    "picture": "data/sahur.jpg",
+    "pronounce": "data/sahur.mp3",
+    "answer": "tung tung tung sahur"
+  },
+  {
+    "picture": "data/tropa.jpg",
+    "pronounce": "data/tropa.mp3",
+    "answer": "trippi troppi troppa trippa"
+  },
+  {
+    "picture": "data/gusini.jpg",
+    "pronounce": "data/gusini.mp3",
+    "answer": "bombombini gusini"
+  },
+  {
+    "picture": "data/ballerina.jpg",
+    "pronounce": "data/balerina.mp3",
+    "answer": "ballerina cappuccina"
+  },
+  {
+    "picture": "data/bombordiro.jpg",
+    "pronounce": "data/bombordiro.mp3",
+    "answer": "bombardiro crocodillo"
+  },
+  {
+    "picture": "data/patapim.jpg",
+    "pronounce": "data/patapim.mp3",
+    "answer": "brr brr papatim"
+  },
+  {
+    "picture": "data/zhirafo.jpg",
+    "pronounce": "data/zhirafo.mp3",
+    "answer": "ganganzeli trulala giraffe mafiosi"
+  },
+  {
+    "picture": "data/zibra.jpg",
+    "pronounce": "data/zibra.mp3",
+    "answer": "zibra zubra zibralini"
   }
 ]

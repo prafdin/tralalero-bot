@@ -25,6 +25,7 @@ logging.basicConfig(
 
 ASKING = 1
 SIMILARITY_THRESHOLD = 50
+MAX_QUESTIONS = 4
 QUESTIONS = []
 LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ user_data_store = {}
 async def start_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_id = update.effective_user.id
     LOGGER.info(f"User {user_id} started the quiz.")
-    questions = QUESTIONS.copy()
+    questions = QUESTIONS.copy()[:MAX_QUESTIONS]
     random.shuffle(questions)
     user_data_store[user_id] = {
         "questions": questions,
@@ -174,7 +175,8 @@ async def rules_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         "2. За правильный ответ начисляются очки.\n"
         "3. Чем больше похоже на оригинал - тем больше очков.\n"
         "4. Максимум очков за правильный ответ - 50.\n"
-        "5. Удачи!"
+        "5. Одна попытка - 4 вопроса.\n"
+        "6. Удачи!"
     )
 
 
