@@ -179,6 +179,14 @@ async def rules_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         "6. Удачи!"
     )
 
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+    LOGGER.error("Exception while handling an update:", exc_info=context.error)
+
+    if update and isinstance(update, Update) and update.effective_user:
+        await context.bot.send_message(
+            chat_id=update.effective_user.id,
+            text="Произошла ошибка. Попробуй последнее действие ещё раз."
+        )
 
 def main() -> None:
     with open("questions.json", "r", encoding="utf-8") as file:
@@ -202,8 +210,10 @@ def main() -> None:
     )
 
     application.add_handler(conv_handler)
-    application.add_handler(CommandHandler("start", help_command))
+    application.add_handler(CommandHandler(["start", "help"], help_command))
     application.add_handler(CommandHandler("rules", rules_command))
+
+    application.add_error_handler(error_handler)
 
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
