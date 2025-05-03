@@ -77,8 +77,13 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         )
     )
     pronounces_iter = state["pronounces_iter"]
+    pronounce = next(pronounces_iter, None)
+    if not pronounce:
+        LOGGER.error(f"Pronounce not found for user {user_id}.")
+        await update.message.reply_text("Произошла ошибка. Начни квиз заново командой /quiz.")
+        return ConversationHandler.END
 
-    await update.message.reply_voice(next(pronounces_iter))
+    await update.message.reply_voice(pronounce)
     return await ask_next_question(update, context)
 
 
