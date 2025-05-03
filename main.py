@@ -70,9 +70,11 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
     voice = update.message.voice
     LOGGER.info(f"Received voice message from user {user_id}.")
-    # state["answers"].append(asyncio.create_task(asyncio.to_thread(download_and_recognize_voice, voice)))
-    state["answers"].append(await asyncio.to_thread(download_and_recognize_voice, voice))
-
+    state["answers"].append(
+        asyncio.create_task(
+            download_and_recognize_voice(voice)
+        )
+    )
     pronounces_iter = state["pronounces_iter"]
 
     await update.message.reply_voice(next(pronounces_iter))
@@ -99,9 +101,10 @@ async def finalize_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     LOGGER.info(f"Finalizing quiz for user {user_id}.")
     await update.message.reply_text("Считаем результат...")
 
+    recognized_answers = await asyncio.gather(*state["answers"])
     result = 0
     for i, q in enumerate(state["questions"]):
-        recognized_answer = await state["answers"][i]
+        recognized_answer = recognized_answers[i]
         correct_answer = q["answer"]
         similarity = fuzz.ratio(correct_answer, recognized_answer)
         LOGGER.info(f"Similarity for {correct_answer}: {similarity}")
@@ -118,7 +121,7 @@ async def finalize_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 async def download_and_recognize_voice(voice: Voice):
     file = await voice.get_file()
     path = await file.download_to_drive()
-    recognized = recognize_voice(path)
+    recognized = await asyncio.to_thread(recognize_voice, path)
     path.unlink()
     return recognized
 
